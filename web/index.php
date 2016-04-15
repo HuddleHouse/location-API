@@ -8,8 +8,11 @@ $app['debug'] = true;
 
 $app->register(new Silex\Provider\SessionServiceProvider());
 
-require_once __DIR__.'/login.php';
-require_once __DIR__.'/location_api.php';
+require_once __DIR__.'/LocationApi/index.php';
+//require_once __DIR__.'/Login/index.php';
+
+$app->mount('/login', include __DIR__ . '/Login/index.php');
+$app->mount('/location', include __DIR__ . '/LocationApi/index.php');
 
 $app->get('/hello/{name}', function ($name) use ($app) {
     return 'Hello '.$app->escape($name);

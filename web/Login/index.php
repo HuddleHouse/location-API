@@ -2,7 +2,9 @@
 
 use Symfony\Component\HttpFoundation\Response;
 
-$app->get('/login', function () use ($app) {
+$login = $app['controllers_factory'];
+
+$login->get('/', function () use ($app) {
     $username = $app['request']->server->get('PHP_AUTH_USER', false);
     $password = $app['request']->server->get('PHP_AUTH_PW');
 
@@ -17,7 +19,7 @@ $app->get('/login', function () use ($app) {
     return $response;
 });
 
-$app->get('/account', function () use ($app) {
+$login->get('/account', function () use ($app) {
     if (null === $user = $app['session']->get('user')) {
         return $app->redirect('/login');
     }
@@ -25,9 +27,10 @@ $app->get('/account', function () use ($app) {
     return "Welcome {$user['username']}!";
 });
 
-$app->get('/logout', function () use ($app) {
+$login->get('/logout', function () use ($app) {
     $username = $app['request']->server->remove('PHP_AUTH_USER');
     $password = $app['request']->server->remove('PHP_AUTH_PW');
     return $app->redirect('/login');
 });
 
+return $login;
