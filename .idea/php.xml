@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpProjectServersManager">
+    <servers>
+      <server host="location.dev" id="25c10463-450b-4563-8cd0-3a5059530af0" name="location.dev">
+        <path_mappings>
+          <mapping local-root="$PROJECT_DIR$/web/index.php" remote-root="/Users/work/Sites/locationApi/web/index.php" />
+        </path_mappings>
+      </server>
+    </servers>
+  </component>
+</project>

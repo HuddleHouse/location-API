@@ -32,11 +32,20 @@ $app->put('/location/save', function (Request $request) use ($app) {
     $time = $request->get('time');
 
     try {
-        if(!$time)
-            $time = date('Y-m-d');
+        $location = new Location();
+        $location->setLat($lat);
+        $location->setLon($lon);
+        $location->setEmail($email);
 
-        $sql = "insert into locations (lat, lon, email, time) values (?, ?, ?, ?)";
-        $app['db']->executeUpdate($sql, array($lat, $lon, $email, $time));
+        if($time)
+            $location->setTime($time);
+        else
+            $location->setTime(date('Y-m-d'));
+
+//        $sql = "insert into locations (lat, lon, email, time) values (?, ?, ?, ?)";
+        $app['db.orm.em']->persist($location);
+        $app['db.orm.em']->flush();
+//        $location['db']['localhost']->executeUpdate($sql, array($lat, $lon, $email, $time));
     }
     catch (Exception $e) {
         return 'Error: ' . $e->getMessage() ."\n";
